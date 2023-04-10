@@ -19,30 +19,57 @@ class HasTable {
   }
 
   checkLoadFactor() {
+    const tableSize = this.table.lenght + 1
+    const loadFactor = (tableSize / this.size) * 100 //this gives you percentage  
     //(length of table / size) * 100 - this gives you percentage  
-    //if loadFactor is above the limit 
-      //then autoScale
+    if(loadFactor >= this.loadLimit) {
+      console.log('AUTOSCALE')
+    }
   }
 
-  set(item) {
-    //checkLoadFactor
-    //make hash
-    //check if its already in the the table
-      //if so then edit
-    //check if it collides
+  doesItemExists({ hash, key, value }) {
+    const item = this.table[hash]
+    const alreadyExists = item && JSON.stringify(item) === JSON.stringify({ key, value })
+
+    return alreadyExists
+  }
+
+  get(key) {
+    const hash = this.hash(key)
+
+    //check if a linked list
+      //if so then travers through link
+    return this.table[hash]
+  }
+
+  set({ key, value }) {
+    const hash = this.hash(key)
+
+    const alreadyExists = this.doesItemExists({ hash, key, value })
+
+    if(alreadyExists) {
+      throw new Error('Item Already Exists')
+    }
+
+    const collisionDetected = this.table[hash]
+    if(collisionDetected) {
+      console.log('handle collision')
       //if so then create a linked list
-    //set item in table
+    }
+
+    this.table[hash] = { key, value }
+    this.checkLoadFactor()
   } 
 
-  delete(item) {
+  delete({ key, value }) {
     //make hash
     //check if item is in linked list and if removed will leave only one left
       //if so then remove linked list
     //remove item
-    //checkLoadFactor
+    this.checkLoadFactor()
   }
 
-  edit(item) {
+  edit({ key, value }) {
     //make hash
     //check if its already in the the table
       //if so then edit
@@ -52,6 +79,6 @@ class HasTable {
 
 
 
-export default function CreateHasTable(size) {
+export default function CreateHashTable(size) {
   return new HasTable(size)
 }
