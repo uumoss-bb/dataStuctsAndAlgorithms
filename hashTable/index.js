@@ -43,6 +43,7 @@ class HasTable {
   }
 
   set({ key, value }) {
+    console.log(this.table[0])
     const hash = this.hash(key)
 
     const alreadyExists = this.doesItemExists({ hash, key, value })
@@ -62,7 +63,7 @@ class HasTable {
   } 
 
   delete({ key, value }) {
-    //make hash
+    const hash = this.hash(key)
     //check if item is in linked list and if removed will leave only one left
       //if so then remove linked list
     //remove item
@@ -70,7 +71,7 @@ class HasTable {
   }
 
   edit({ key, value }) {
-    //make hash
+    const hash = this.hash(key)
     //check if its already in the the table
       //if so then edit
       //else warn user
