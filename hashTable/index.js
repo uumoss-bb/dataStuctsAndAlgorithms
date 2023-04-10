@@ -31,7 +31,7 @@ class HasTable {
     const item = this.table[hash]
     const alreadyExists = item && JSON.stringify(item) === JSON.stringify({ key, value })
 
-    return alreadyExists
+    return alreadyExists ?? item
   }
 
   get(key) {
@@ -39,11 +39,17 @@ class HasTable {
 
     //check if a linked list
       //if so then travers through link
+
+    const item = this.table[hash]
+    if(item) {
+      return item
+    } else {
+      throw new Error('Not Found')
+    }
     return this.table[hash]
   }
 
   set({ key, value }) {
-    console.log(this.table[0])
     const hash = this.hash(key)
 
     const alreadyExists = this.doesItemExists({ hash, key, value })
@@ -62,19 +68,19 @@ class HasTable {
     this.checkLoadFactor()
   } 
 
-  delete({ key, value }) {
+  delete(key) {
     const hash = this.hash(key)
     //check if item is in linked list and if removed will leave only one left
       //if so then remove linked list
     //remove item
+    this.table[hash] = undefined
     this.checkLoadFactor()
   }
 
   edit({ key, value }) {
+    this.get(key)
     const hash = this.hash(key)
-    //check if its already in the the table
-      //if so then edit
-      //else warn user
+    this.table[hash] = { key, value }
   }
 }
 

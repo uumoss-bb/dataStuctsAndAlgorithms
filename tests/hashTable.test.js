@@ -2,6 +2,8 @@ import CreateHashTable from "../hashTable";
 
 const item = { key: 'test', value: 'data' }
 
+const editedItem = { ...item, value: 'newData'}
+
 describe('Hash Table', () => {
   it('table.hash takes a string, gets the ascii code for each char, addes them up and divides them by the size (10) and returns the remainder', () => {
     const size = 10 
@@ -23,5 +25,14 @@ describe('Hash Table', () => {
     HashTable.set(item)
     const result = HashTable.get(item.key)
     expect(result).toStrictEqual(item)
+  })
+
+  it('table.edit modifies an existing item', () => {
+    const size = 10 
+    const HashTable = CreateHashTable(size)
+    HashTable.set(item)
+    HashTable.edit(editedItem)
+    const result = HashTable.get(item.key)
+    expect(result).toStrictEqual(editedItem)
   })
 })
