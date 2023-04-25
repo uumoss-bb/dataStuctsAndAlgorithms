@@ -4,9 +4,10 @@ class LinkedList {
 
   constructor() {
     this.head = null
+    this.length = 0
   }
 
-  newLin = (data) => ({
+  newLink = (data) => ({
     next: null,
     data
   })
@@ -38,6 +39,8 @@ class LinkedList {
     } else {
       this.head = this.newLink(data)
     }
+
+    this.setLength()
   }
 
   remove(data) {
@@ -52,11 +55,12 @@ class LinkedList {
     }
     
     link.next = link.next.next
+    this.setLength()
   }
 
   edit(oldData, newData) {
     if(this.checkHeadForData(oldData)) {
-      return this.head = null
+      return this.head.data = newData
     }
 
     const link = this.checkNextForData(oldData, this.head)
@@ -64,28 +68,32 @@ class LinkedList {
     link.next.data = newData
   }
 
-  indexOf(index) {
-    const link = this.head
-    const currentIndex = 0
+  getByIndex(index) {
+    let link = this.head
+    let currentIndex = 0
 
     while(link && currentIndex !== index) {
       currentIndex++
       link = link.next
     }
 
-    return link
+    return link ? link.data : undefined
   }
 
-  length() {
-    const link = this.head
-    const length = 0
+  setLength() {
+    let link = this.head
+    let length = 0 
 
     while(link) {
       length++
       link = link.next
     }
 
-    return length
+    this.length = length
+  }
+
+  displayLink() {
+    //to do
   }
 }
 export default function createLinkedList() {
