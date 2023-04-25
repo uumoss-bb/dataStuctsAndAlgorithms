@@ -41,12 +41,11 @@ class HasTable {
       //if so then travers through link
 
     const item = this.table[hash]
-    if(item) {
-      return item
-    } else {
+    if(!item) {
       throw new Error('Not Found')
     }
-    return this.table[hash]
+    
+    return item
   }
 
   set({ key, value }) {
@@ -86,6 +85,6 @@ class HasTable {
 
 
 
-export default function CreateHashTable(size) {
+export default function createHashTable(size) {
   return new HasTable(size)
 }
